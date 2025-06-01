@@ -6,7 +6,7 @@ import unisa.dse.a2.interfaces.ListGeneric;
  * @author simont
  *
  */
-public class DSEListGeneric implements ListGeneric {
+public class DSEListGeneric<T> implements ListGeneric {
 	
 	public NodeGeneric head;
 	private NodeGeneric tail;
@@ -17,7 +17,7 @@ public class DSEListGeneric implements ListGeneric {
 		tail = null;
 		size = 0;
 	}
-	public DSEListGeneric(NodeGeneric head_) {
+	public DSEListGeneric(NodeGeneric<T> head_) {
 		this.head = head_;
 		if (head_ == null) {
 			this.tail = null;
@@ -72,7 +72,7 @@ public class DSEListGeneric implements ListGeneric {
 	}
 
 	//returns the index of the String parameter 
-	public int indexOf(String obj) {
+	public int indexOf(T obj) {
 		NodeGeneric<T> current = head;
         int index = 0;
         while (current != null) {
@@ -93,23 +93,71 @@ public class DSEListGeneric implements ListGeneric {
 
 	//checks if there is a list
 	public boolean isEmpty() {
+		return size == 0;
 	}
 
 	//return the size of the list
 	public int size() {
+		return size;
 	}
 	
 	//Take each element of the list a writes them to a string 
 	@Override
 	public String toString() {
+		public String toString() {
+			StringBuilder sb = new StringBuilder();
+	        NodeGeneric<T> current = head;
+	        while (current != null) {
+	            sb.append(current.get().toString());
+	            if (current.next != null) sb.append(" ");
+	            current = current.next;
+	        }
+	        return sb.toString();
 	}
 
 	//add the parameter item at of the end of the list
-	public boolean add(Object obj) {
+	public boolean add(T obj) {
+		if (obj == null) return false;
+        NodeGeneric<T> newNode = new NodeGeneric<>(null, tail, obj);
+
+        if (head == null) {
+            head = tail = newNode;
+        } else {
+            tail.next = newNode;
+            newNode.prev = tail;
+            tail = newNode;
+        }
+
+        size++;
+        return true;
 	}
 
 	//add item at parameter's index
 	public boolean add(int index, Object obj) {
+	public boolean add(int index, T obj) {
+		if (obj == null || index < 0 || index > size) return false;
+        NodeGeneric<T> newNode = new NodeGeneric<>(null, null, obj);
+
+        if (index == 0) {
+            newNode.next = head;
+            if (head != null) head.prev = newNode;
+            head = newNode;
+            if (tail == null) tail = newNode;
+        } else if (index == size) {
+            return add(obj);
+        } else {
+            NodeGeneric<T> current = head;
+            for (int i = 0; i < index; i++) current = current.next;
+            NodeGeneric<T> prev = current.prev;
+
+            newNode.next = current;
+            newNode.prev = prev;
+            prev.next = newNode;
+            current.prev = newNode;
+        }
+
+        size++;
+        return true;
 	}
 
 	//searches list for parameter's String return true if found
