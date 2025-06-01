@@ -56,15 +56,39 @@ public class DSEListGeneric implements ListGeneric {
 
 	//remove and return the item at the parameter's index
 	public void remove(int index) {
+		if (index < 0 || index >= size) return null;
 
+        NodeGeneric<T> current = head;
+        for (int i = 0; i < index; i++) current = current.next;
+
+        if (current.prev != null) current.prev.next = current.next;
+        else head = current.next;
+
+        if (current.next != null) current.next.prev = current.prev;
+        else tail = current.prev;
+
+        size--;
+		return current.get();
 	}
 
 	//returns the index of the String parameter 
 	public int indexOf(String obj) {
+		NodeGeneric<T> current = head;
+        int index = 0;
+        while (current != null) {
+            if (current.get().equals(obj)) return index;
+            current = current.next;
+            index++;
+        }
+        return -1;
 	}
 	
 	//returns item at parameter's index
 	public void get(int index) {
+		if (index < 0 || index >= size) return null;
+        NodeGeneric<T> current = head;
+        for (int i = 0; i < index; i++) current = current.next;
+        return current.get();
 	}
 
 	//checks if there is a list
