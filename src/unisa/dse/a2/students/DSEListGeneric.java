@@ -131,9 +131,9 @@ public class DSEListGeneric<T> implements ListGeneric {
         size++;
         return true;
 	}
+	
 
 	//add item at parameter's index
-	public boolean add(int index, Object obj) {
 	public boolean add(int index, T obj) {
 		if (obj == null || index < 0 || index > size) return false;
         NodeGeneric<T> newNode = new NodeGeneric<>(null, null, obj);
@@ -162,19 +162,44 @@ public class DSEListGeneric<T> implements ListGeneric {
 
 	//searches list for parameter's String return true if found
 	public boolean contains(Object obj) {
+	public boolean contains(T obj) {
+		return indexOf(obj) != -1;
 	}
 
 	//removes the parameter's item form the list
-	public boolean remove(Object obj) {
+	public boolean remove(T obj) {
+		int index = indexOf(obj);
+        if (index == -1) return false;
+        remove(index);
+        return true;
 	}
 	
 	@Override
 	public int hashCode() {
-		return 0;
+		int result = 1;
+        NodeGeneric<T> current = head;
+        while (current != null) {
+            result = 31 * result + (current.get() == null ? 0 : current.get().hashCode());
+            current = current.next;
+        }
+        return result;
 	}
 
 	@Override
 	public boolean equals(Object other) {
+		if (this == other) return true;
+        if (!(other instanceof DSEListGeneric<?>)) return false;
+
+        DSEListGeneric<?> o = (DSEListGeneric<?>) other;
+        if (this.size != o.size()) return false;
+
+        NodeGeneric<T> a = this.head;
+        NodeGeneric<?> b = o.head;
+        while (a != null && b != null) {
+            if (!a.get().equals(b.get())) return false;
+            a = a.next;
+            b = b.next;
+        }
 		return true;
 	}
 	
