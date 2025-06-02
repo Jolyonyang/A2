@@ -8,6 +8,7 @@ public class ListedCompany {
 	private String name;
 	
 	public void getName() {
+		return name;
 	}
 
 	/**
@@ -16,6 +17,7 @@ public class ListedCompany {
 	private String code;
 	
 	public void getCode() {
+		return code;
 	}
 
 	/**
@@ -24,10 +26,14 @@ public class ListedCompany {
 	private int currentPrice;
 	
 	public void getCurrentPrice() {
+		return currentPrice;
 	}
 	
 	public ListedCompany(String code, String name, int currentPrice)
 	{
+		this.code = code;
+		this.name = name;
+		this.currentPrice = currentPrice;
 	}
 	
 	/**
@@ -40,5 +46,10 @@ public class ListedCompany {
 	 */
 	public void processTrade(int quantity)
 	{
+		int change = quantity / 100;
+        currentPrice += change;
+        if (currentPrice < 1) {
+            currentPrice = 1;
+        }
 	}
 }
