@@ -161,7 +161,6 @@ public class DSEListGeneric<T> implements ListGeneric {
 	}
 
 	//searches list for parameter's String return true if found
-	public boolean contains(Object obj) {
 	public boolean contains(T obj) {
 		return indexOf(obj) != -1;
 	}
