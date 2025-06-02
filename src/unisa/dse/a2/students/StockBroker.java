@@ -20,6 +20,7 @@ public class StockBroker {
 	 * @return
 	 */
 	public DSEListGeneric<String> getWatchlist() {
+		// Create new instance to ensure deep copy - protects internal watchlist
 		return new DSEListGeneric<String>(watchList);
 	}
 	
@@ -30,6 +31,11 @@ public class StockBroker {
 	 */
 	public boolean addWatchlist(String companyCode)
 	{
+		// Validate input and check for duplicates before adding
+		if (companyCode != null && !watchList.contains(companyCode)) {
+			return watchList.add(companyCode);
+		}
+		return false;
 	}
 	
 	private String name;
@@ -39,6 +45,7 @@ public class StockBroker {
 	 * @return
 	 */
 	public String getName() {
+		return name;
 	}
 	
 	/**
@@ -47,6 +54,7 @@ public class StockBroker {
 	 */
 	public StockBroker(String name)
 	{
+		this.name = name;
 	}
 	
 	/**
@@ -56,6 +64,11 @@ public class StockBroker {
 	 */
 	public boolean placeOrder(Trade order)
 	{
+		// Validate order and prevent duplicates in the priority queue
+		if (order != null && !pendingTrades.contains(order)) {
+				return pendingTrades.add(order);
+		}
+		return false;
 	}
 	
 	/**
@@ -64,6 +77,9 @@ public class StockBroker {
 	 */
 	public Trade getNextTrade()
 	{
+		// PriorityQueue.poll() returns highest priority element (based on compareTo)
+		// Returns null if queue is empty
+		return pendingTrades.poll();
 	}
 	
 	/**
@@ -71,6 +87,7 @@ public class StockBroker {
 	 */
 	public int getPendingTradeCount()
 	{
+		return pendingTrades.size();
 	}
 
 	/**
