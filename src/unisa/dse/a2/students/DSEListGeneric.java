@@ -23,7 +23,7 @@ public class DSEListGeneric<T> implements ListGeneric {
 			this.tail = null;
 			this.size = 0;
 		} else {
-			
+			// Find the tail and count the size
 			NodeGeneric<T> current = head_;
 			int count = 1;
 			while (current.next != null) {

@@ -13,6 +13,7 @@ public class SecuritiesExchange {
 	private String name;
 	
 	public String getName() {
+		return name;
 	}
 	
 	/**
@@ -36,6 +37,10 @@ public class SecuritiesExchange {
 	 */
 	public SecuritiesExchange(String name)
 	{
+		this.name = name;
+		this.brokers = new DSEListGeneric<StockBroker>();
+		this.announcements = new DSEListGeneric<String>();
+		this.companies = new HashMap<String, ListedCompany>();
 	}
 	
 	/**
@@ -45,6 +50,11 @@ public class SecuritiesExchange {
 	 */
 	public boolean addCompany(ListedCompany company)
 	{
+		if (company == null || companies.containsKey(company.getCode())) {
+            return false;
+        }
+        companies.put(company.getCode(), company);
+        return true;
 	}
 
 	/**
@@ -53,6 +63,10 @@ public class SecuritiesExchange {
 	 */
 	public boolean addBroker(StockBroker broker)
 	{
+		if (broker == null || brokers.contains(broker)) {
+            return false;
+        }
+        return brokers.add(broker);
 	}
 	
 	/**
