@@ -87,10 +87,51 @@ public class SecuritiesExchange {
 	 */
 	public int processTradeRound()
 	{
+		int tradeCount = 0;
+
+        // Loop through all brokers in the exchange to process one trade from each
+        for (int i = 0; i < brokers.size(); i++) {
+            StockBroker broker = brokers.get(i);
+            
+            // Get the next highest priority trade from this broker's queue
+            Trade trade = broker.getNextTrade();
+
+            // Skip brokers with no pending trades
+            if (trade == null) continue;
+
+            // Validate that the company being traded exists on this exchange
+            String companyCode = trade.getCompanyCode();
+            ListedCompany company = companies.get(companyCode);
+
+            if (company == null) {
+                // Throw exception if trying to trade unlisted company
+                throw new UntradedCompanyException(companyCode);
+            }
+
+            // Capture price before trade execution for announcement
+            int priceBefore = company.getCurrentPrice();
+            
+            // Execute the trade - this will update the company's stock price
+            company.processTrade(trade.getShareQuantity());
+
+            // Create formal announcement of completed trade
+            String announcement = String.format("Trade: %d %s @ %d via %s",
+                    trade.getShareQuantity(),
+                    companyCode,
+                    priceBefore,  // Show pre-trade price
+                    broker.getName()
+            );
+
+            // Add announcement to exchange's public record
+            announcements.add(announcement);
+            tradeCount++;
+        }
+
+        return tradeCount;
 	}
 	
 	public int runCommandLineExchange(Scanner sc)
 	{
-		
+		return 0;
 	}
 }
