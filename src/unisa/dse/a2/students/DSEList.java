@@ -70,7 +70,7 @@ public class DSEList implements List {
         return current.getString();
 	}
 
-	}
+	
 
 	//returns the index of the String parameter 
 	public int indexOf(String obj) {
