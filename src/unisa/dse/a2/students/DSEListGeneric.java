@@ -6,10 +6,10 @@ import unisa.dse.a2.interfaces.ListGeneric;
  * @author simont
  *
  */
-public class DSEListGeneric<T> implements ListGeneric {
+public class DSEListGeneric<T> implements ListGeneric<T> {
 	
-	public NodeGeneric head;
-	private NodeGeneric tail;
+	public NodeGeneric<T> head;
+	private NodeGeneric<T> tail;
 	private int size = 0;
 	
 	public DSEListGeneric() {
@@ -36,7 +36,7 @@ public class DSEListGeneric<T> implements ListGeneric {
 	}
 	
 	//Takes a list then adds each element into a new list
-	public DSEListGeneric(DSEList other) { 
+	public DSEListGeneric(DSEListGeneric<T> other) { 
 		if (other == null || other.head == null) return;
 
         this.head = new NodeGeneric<>(null, null, other.head.get());
@@ -55,7 +55,7 @@ public class DSEListGeneric<T> implements ListGeneric {
 	}
 
 	//remove and return the item at the parameter's index
-	public void remove(int index) {
+	public T remove(int index) {
 		if (index < 0 || index >= size) return null;
 
         NodeGeneric<T> current = head;
@@ -84,7 +84,7 @@ public class DSEListGeneric<T> implements ListGeneric {
 	}
 	
 	//returns item at parameter's index
-	public void get(int index) {
+	public T get(int index) {
 		if (index < 0 || index >= size) return null;
         NodeGeneric<T> current = head;
         for (int i = 0; i < index; i++) current = current.next;
@@ -104,7 +104,6 @@ public class DSEListGeneric<T> implements ListGeneric {
 	//Take each element of the list a writes them to a string 
 	@Override
 	public String toString() {
-		public String toString() {
 			StringBuilder sb = new StringBuilder();
 	        NodeGeneric<T> current = head;
 	        while (current != null) {
