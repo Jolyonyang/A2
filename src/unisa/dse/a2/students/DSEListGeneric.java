@@ -93,12 +93,18 @@ public class DSEListGeneric<T> implements ListGeneric<T> {
 
 	//checks if there is a list
 	public boolean isEmpty() {
-		return size == 0;
+		int counter = 0;
+	    NodeGeneric<T> current = head;
+	    while (current != null) {
+	        counter++;
+	        current = current.next;
+	    }
+	    return counter == 0;
 	}
 
 	//return the size of the list
 	public int size() {
-		return size;
+		return this.size;
 	}
 	
 	//Take each element of the list a writes them to a string 

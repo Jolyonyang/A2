@@ -87,7 +87,8 @@ public class StockBroker {
 	 */
 	public int getPendingTradeCount()
 	{
-		return pendingTrades.size();
+		int count = pendingTrades.size();
+	    return count;
 	}
 
 	/**

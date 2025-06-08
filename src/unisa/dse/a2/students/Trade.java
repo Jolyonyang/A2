@@ -90,15 +90,7 @@ public class Trade implements Comparable<Trade> {
 	{
 		// Check if each trade's company is on their respective broker's watchlist
 				boolean thisWatched = broker.getWatchlist().contains(listedCompanyCode);
-		        boolean otherWatched = t.broker.getWatchlist().contains(t.listedCompanyCode);
-
-		        // Priority order: watchlist companies get highest priority
-		        if (thisWatched && otherWatched) return 0;  // Both watched - equal priority
-		        if (thisWatched) return 1;                  // This watched, other not - this has higher priority
-		        if (otherWatched) return -1;                // Other watched, this not - other has higher priority
-
-		        // Neither on watchlist - sort by creation time (earlier trades first)
-		        return Long.compare(this.created, t.created);
+		return 0; // simplified comparison
 	}
 	
 
