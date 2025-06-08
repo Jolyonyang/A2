@@ -7,7 +7,7 @@ public class ListedCompany {
 	 */
 	private String name;
 	
-	public void getName() {
+	public String getName() {
 		return name;
 	}
 
@@ -16,7 +16,7 @@ public class ListedCompany {
 	 */
 	private String code;
 	
-	public void getCode() {
+	public String getCode() {
 		return code;
 	}
 
@@ -25,7 +25,7 @@ public class ListedCompany {
 	 */
 	private int currentPrice;
 	
-	public void getCurrentPrice() {
+	public int getCurrentPrice() {
 		return currentPrice;
 	}
 	
