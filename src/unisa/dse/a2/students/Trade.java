@@ -88,8 +88,6 @@ public class Trade implements Comparable<Trade> {
 	 */
 	public int compareTo(Trade t)
 	{
-		// Check if each trade's company is on their respective broker's watchlist
-				boolean thisWatched = broker.getWatchlist().contains(listedCompanyCode);
 		return 0; // simplified comparison
 	}
 	
